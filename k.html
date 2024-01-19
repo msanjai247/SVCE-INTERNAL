@@ -79,22 +79,22 @@
 
     <h2>Internal Marks Calculator</h2>
 
-    <label for="cat1">CAT1 marks:</label>
-    <input type="number" id="cat1 of subject">
+    <label for="cat1">Your CAT1 marks:</label>
+    <input type="number" id="cat1">
 
-    <label for="cat2">CAT2 marks:</label>
-    <input type="number" id="cat2 of subject">
+    <label for="cat2">Your CAT2 marks:</label>
+    <input type="number" id="cat2">
 
-    <label for="at3">AT3 marks:</label>
-    <input type="number" id="cat3 of subject">
+    <label for="at3">Your CAT3 marks:</label>
+    <input type="number" id="at3">
 
-    <label for="assignment1">Assignment1 marks:</label>
+    <label for="assignment1">Your Assignment1 marks:</label>
     <input type="number" id="assignment1">
 
-    <label for="assignment2">Assignment2 marks:</label>
+    <label for="assignment2">Your Assignment2 marks:</label>
     <input type="number" id="assignment2">
 
-    <label for="assignment3">Assignment3 marks:</label>
+    <label for="assignment3">Your Assignment3 marks:</label>
     <input type="number" id="assignment3">
 
     <button onclick="calculateInternalMarks()">Calculate Internal Marks</button>
@@ -104,22 +104,34 @@
 
 <script>
     function calculateInternalMarks() {
-        var cat1 = parseFloat(document.getElementById("cat1").value) || 0;
-        var cat2 = parseFloat(document.getElementById("cat2").value) || 0;
-        var at3 = parseFloat(document.getElementById("at3").value) || 0;
-        var assignment1 = parseFloat(document.getElementById("assignment1").value) || 0;
-        var assignment2 = parseFloat(document.getElementById("assignment2").value) || 0;
-        var assignment3 = parseFloat(document.getElementById("assignment3").value) || 0;
+        // Get input values
+        var cat1 = parseFloat(getInputValue("cat1"));
+        var cat2 = parseFloat(getInputValue("cat2"));
+        var cat3 = parseFloat(getInputValue("at3")); // Using "Your CAT3 marks" label
+        var assignment1 = parseFloat(getInputValue("assignment1"));
+        var assignment2 = parseFloat(getInputValue("assignment2"));
+        var assignment3 = parseFloat(getInputValue("assignment3"));
 
-        var internalMarks = (0.7 * (cat1 + cat2 + at3)) + (0.3 * (assignment1 + assignment2 + assignment3));
+        // Calculate internal marks
+        var internalMarks = calculateAverage(cat1, cat2, cat3) * 0.7 + calculateAverage(assignment1, assignment2, assignment3) * 0.3;
         internalMarks = (internalMarks / 3) * 0.8;
 
+        // Display the result
         var resultElement = document.getElementById("result");
         resultElement.innerHTML = "Internal Marks: " + internalMarks.toFixed(2);
 
+        // Display failure message if applicable
         if (internalMarks < 23) {
             resultElement.innerHTML += "<br><span class='failure'>You failed!</span>";
         }
+    }
+
+    function getInputValue(id) {
+        return document.getElementById(id).value || 0;
+    }
+
+    function calculateAverage(value1, value2, value3) {
+        return (value1 + value2 + value3) / 3;
     }
 </script>
 
