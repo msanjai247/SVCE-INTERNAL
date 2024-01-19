@@ -9,17 +9,21 @@
             font-family: 'Arial', sans-serif;
             text-align: center;
             margin: 20px;
-            background-color: #f4f4f4;
+            background-color: #f0f0f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
         }
 
         #calculator {
             max-width: 400px;
-            margin: 0 auto;
-            background-color: #fff;
+            width: 100%;
             border-radius: 8px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             padding: 20px;
             box-sizing: border-box;
+            background-color: #fff;
         }
 
         h2 {
@@ -44,13 +48,14 @@
         }
 
         button {
-            background-color: #4caf50;
-            color: white;
             padding: 10px 20px;
             border: none;
             border-radius: 4px;
             cursor: pointer;
             width: 100%;
+            background-color: #4caf50;
+            color: #fff;
+            transition: background-color 0.3s;
         }
 
         button:hover {
@@ -60,7 +65,19 @@
         #result {
             font-size: 18px;
             margin-top: 15px;
-            color: #333;
+        }
+
+        /* Colors based on result */
+        .failed {
+            color: red;
+        }
+
+        .passed {
+            color: green;
+        }
+
+        .invalid {
+            color: orange;
         }
     </style>
 </head>
@@ -70,22 +87,22 @@
     <h2>Internal Marks Calculator</h2>
 
     <label for="cat1">Your CAT1 marks:</label>
-    <input type="number" id="cat1">
+    <input type="number" id="cat1" max="50">
 
     <label for="cat2">Your CAT2 marks:</label>
-    <input type="number" id="cat2">
+    <input type="number" id="cat2" max="50">
 
     <label for="at3">Your CAT3 marks:</label>
-    <input type="number" id="at3">
+    <input type="number" id="at3" max="50">
 
     <label for="assignment1">Assignment1 marks:</label>
-    <input type="number" id="assignment1">
+    <input type="number" id="assignment1" max="50">
 
     <label for="assignment2">Assignment2 marks:</label>
-    <input type="number" id="assignment2">
+    <input type="number" id="assignment2" max="50">
 
     <label for="assignment3">Assignment3 marks:</label>
-    <input type="number" id="assignment3">
+    <input type="number" id="assignment3" max="50">
 
     <button onclick="calculateInternalMarks()">Calculate Internal Marks</button>
 
@@ -101,11 +118,32 @@
         var assignment2 = parseFloat(document.getElementById("assignment2").value) || 0;
         var assignment3 = parseFloat(document.getElementById("assignment3").value) || 0;
 
+        // Validate marks to be less than or equal to 50
+        if (cat1 > 50 || cat2 > 50 || at3 > 50 || assignment1 > 50 || assignment2 > 50 || assignment3 > 50) {
+            alert("Please enter marks less than or equal to 50.");
+            return;
+        }
+
         var internalMarks = (0.7 * (cat1 + cat2 + at3)) + (0.3 * (assignment1 + assignment2 + assignment3));
         internalMarks = (internalMarks / 3) * 0.8;
 
         var resultElement = document.getElementById("result");
-        resultElement.innerHTML = "Internal Marks: " + internalMarks.toFixed(2);
+        var resultMessage;
+
+        if (internalMarks < 23) {
+            resultMessage = "You Failed";
+            resultElement.classList = "failed";
+        } else if (internalMarks >= 23 && internalMarks <= 40) {
+            resultMessage = "Congratulations!! You Pass";
+            resultElement.classList = "passed";
+        } else if (internalMarks > 40) {
+            resultMessage = "You input is Invalid, Check and Try again";
+            resultElement.classList = "invalid";
+            // Clear internal marks when invalid
+            internalMarks = "";
+        }
+
+        resultElement.innerHTML = resultMessage + (internalMarks !== "" ? "<br>Internal Marks: " + internalMarks.toFixed(2) : "");
     }
 </script>
 
