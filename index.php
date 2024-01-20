@@ -79,22 +79,6 @@
         .invalid {
             color: orange;
         }
-
-        /* Comment Section Styles */
-        hr {
-            margin: 20px 0;
-            border: none;
-            border-top: 1px solid #ddd;
-        }
-
-        textarea {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            box-sizing: border-box;
-            margin-bottom: 15px;
-        }
     </style>
 </head>
 <body>
@@ -123,20 +107,6 @@
     <button onclick="calculateInternalMarks()">Calculate Internal Marks</button>
 
     <p id="result"></p>
-
-    <hr>
-
-    <h2>Comments</h2>
-
-    <form id="commentForm">
-        <label for="comment">Leave a comment (anonymous):</label>
-        <textarea id="comment" rows="4" cols="50"></textarea>
-        <button type="button" onclick="postComment()">Post Comment</button>
-    </form>
-
-    <div id="comments">
-        <!-- Comments will be displayed here -->
-    </div>
 </div>
 
 <script>
@@ -174,22 +144,6 @@
         }
 
         resultElement.innerHTML = resultMessage + (internalMarks !== "" ? "<br>Internal Marks: " + internalMarks.toFixed(2) : "");
-    }
-
-    function postComment() {
-        var commentText = document.getElementById("comment").value.trim();
-
-        if (commentText !== "") {
-            var commentsDiv = document.getElementById("comments");
-            var commentElement = document.createElement("p");
-            commentElement.textContent = "Anonymous: " + commentText;
-            commentsDiv.appendChild(commentElement);
-
-            // Clear the textarea after posting the comment
-            document.getElementById("comment").value = "";
-        } else {
-            alert("Please enter a comment before posting.");
-        }
     }
 </script>
 
