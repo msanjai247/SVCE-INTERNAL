@@ -80,6 +80,10 @@
             color: orange;
         }
     </style>
+
+    <!-- Google AdSense script -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8115358138437657"
+        crossorigin="anonymous"></script>
 </head>
 <body>
 
